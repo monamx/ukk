@@ -19,9 +19,9 @@ export default function DataBarang() {
   };
 
   return (
-    <div className="container">
+    <div className="flex flex-col h-screen">
       <Navbar handleCollapse={handleCollapse} />
-      <div className="content-container">
+      <div className="flex h-screen">
         <div className={`sidebar ${isSidebarCollapsed ? '' : 'sidebar-hide'}`}>
           <Sidebar />
         </div>
