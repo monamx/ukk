@@ -1,8 +1,8 @@
 "use client"
 import Navbar from "../components/Navbar/page"
 import Sidebar from "../components/Sidebar/page"
-// import Data from "../../Component/Data/page"
-// import Form from "../../Component/Form/page"
+import Table from "../components/FormTable/page"
+import FormBuku from "../components/FormBuku/page"
 import { useState } from 'react';
 import { ChevronsUp, ChevronsDown } from 'react-feather';
 
@@ -25,12 +25,14 @@ export default function DataBarang() {
         <div className={`sidebar ${isSidebarCollapsed ? '' : 'sidebar-hide'}`}>
           <Sidebar />
         </div>
-        <div className={`data-buku ${isSidebarCollapsed ? '' : 'sidebar-hide'}`}>
-          {/* <Form isSHForm={isSHForm} />
-          <div className="sh-form" onClick={handleSHForm}>
-            {isSHForm ? <ChevronsDown size={25}/> : <ChevronsUp size={25}/>}
+        <div className="data-buku">
+          <FormBuku isSHForm={isSHForm} />
+          <div className="sh-form">
+            <div className="bg-white text-black rounded-full p-2 mt-10" onClick={handleSHForm} >
+              {isSHForm ? <ChevronsDown size={25}/> : <ChevronsUp size={25}/>}
+            </div>
           </div>
-          <Data /> */}
+          <Table />
         </div>
       </div>
     </div>
