@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Sidebar, Bell, User } from 'react-feather';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   handleCollapse: (shouldCollapse: boolean) => void;
@@ -12,6 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleCollapse }) => {
     profile: false,
   });
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleNavbarClick = () => {
     handleCollapse(false);
@@ -29,10 +31,18 @@ const Navbar: React.FC<NavbarProps> = ({ handleCollapse }) => {
   };
 
   let title = '';
-  if (pathname === '/peminjaman') {
-    title = 'Peminjam';
-  } else if (pathname === '/data') {
-    title = 'Barang';
+  if (pathname === '/dashboard/peminjaman') {
+    title = 'Catatan Peminjaman';
+  } else if (pathname === '/dashboard/buku') {
+    title = 'Data Buku';
+  } else if (pathname === '/dashboard/setting') {
+    title = 'Edit Profile';
+  } else if (pathname === '/dashboard/list') {
+    title = 'Daftar Buku';
+  } else if (pathname === '/dashboard/user') {
+    title = 'Data Users';
+  } else if (pathname === '/dashboard/koleksi') {
+    title = 'Data Koleksi';
   } else {
     title = 'Page Not Found';
   }
@@ -43,16 +53,11 @@ const Navbar: React.FC<NavbarProps> = ({ handleCollapse }) => {
         <a className="navbar-collapse" onClick={handleNavbarClick}>
           <Sidebar />
         </a>
-        <span>PusPin</span>
-        <div className="border-r-2 border-solid border-gray-700 mx-4 self-stretch h-9"></div>
-        <span className='judul'>{title}</span>
+        <a href='/dashboard/buku' className='title'>Pus Pin</a>
+        <div className="border-r-2 border-solid border-gray-700 mx-4 h-9"></div>
+        <span className='sub-title'>{title}</span>
       </div>
       <div className="navbar-right">
-        <button>
-          {/* You can add user data here */}
-          User
-        </button>
-
         <div className="navbar-notification" onClick={handleBellClick}>
           <Bell />
           <span className="notification-badge">1</span>
@@ -81,8 +86,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleCollapse }) => {
           {isPopupOpen.profile && (
             <div className="profile-popup">
               <div className="profile-content">
-                <a href="#" onClick={(e) => { e.preventDefault(); }}>Edit Profile</a>
-                <a href="#" onClick={(e) => { e.preventDefault(); }}>Settings</a>
+                <a href="/dashboard/setting" onClick={() => { router.push('/dashboard/setting'); }}>Edit Profile</a>
                 <a href="#" onClick={() => console.log('Logged out')}>Logout</a>
               </div>
             </div>
