@@ -201,9 +201,10 @@ hr {
 }
 
 .data-buku {
-  margin-top: 78px;
-  margin-left: 280px;
   width: calc(100% - 280px);
+  padding: 40px;
+  margin: 79px 0 40px 280px;
+  height: fit-content;
 }
 
 .sidebar-hide + .data-buku {
