@@ -8,8 +8,37 @@ const Register = () => {
     const username = e.currentTarget.username.value;
     const password = e.currentTarget.password.value;
     const email = e.currentTarget.email.value;
-    const fullName = e.currentTarget.fullName.value;
-    const address = e.currentTarget.address.value;
+    const namaLengkap = e.currentTarget.namaLengkap.value;
+    const alamat = e.currentTarget.alamat.value;
+
+    const data = {
+      username: username,
+      password: password,
+      email: email,
+      namaLengkap: namaLengkap,
+      alamat: alamat
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Registrasi berhasil, mungkin Anda ingin melakukan sesuatu di sini
+        console.log('Registrasi berhasil');
+      } else {
+        // Handle jika respons tidak ok
+        console.error('Registrasi gagal');
+      }
+    } catch (error) {
+      // Handle error jika fetch gagal
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -57,10 +86,10 @@ const Register = () => {
               />
             </div>
             <div>
-              <label htmlFor="fullName" className="sr-only">Full Name</label>
+              <label htmlFor="namaLengkap" className="sr-only">Full Name</label>
               <input
-                id="fullName"
-                name="fullName"
+                id="namaLengkap"
+                name="namaLengkap"
                 type="text"
                 autoComplete="name"
                 required
@@ -69,12 +98,12 @@ const Register = () => {
               />
             </div>
             <div>
-              <label htmlFor="address" className="sr-only">Address</label>
+              <label htmlFor="alamat" className="sr-only">Address</label>
               <input
-                id="address"
-                name="address"
+                id="alamat"
+                name="alamat"
                 type="text"
-                autoComplete="address"
+                autoComplete="alamat"
                 required
                 className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Address"
