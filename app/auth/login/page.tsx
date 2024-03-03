@@ -1,15 +1,40 @@
 "use client"
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import React, { useState } from 'react';
 
 const Login = () => {
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
 
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const response = await signIn('credentials', {
+        redirect: false,
+        email: email,
+        password: password,
+      });
+
+      if (response?.ok) {
+        // router.push('/data');
+        alert('Login Successful');
+      } else {
+        const data = await (response as any).json();
+        if (data.error === 'not_found') {
+          setEmailError('Alamat email tidak ditemukan.');
+        } else if (data.error === 'invalid_password') {
+          setPassError('Password tidak valid.');
+        }
+      }
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengirim data login:', error);
+    }
   };
 
   return (
@@ -31,6 +56,7 @@ const Login = () => {
                 className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-3"
                 placeholder="Email address"
               />
+              {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
             </div>
             <div>
               <label htmlFor="password" className="sr-only">Password</label>
@@ -43,6 +69,7 @@ const Login = () => {
                 className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Password"
               />
+              {passError && <p className="text-red-500 text-sm">{passError}</p>}
             </div>
           </div>
 
