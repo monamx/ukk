@@ -6,6 +6,7 @@ import {
   createMRTColumnHelper,
 } from 'material-react-table';
 import { Box, Button } from '@mui/material';
+import { Edit2, Trash2 } from 'react-feather'; // Import ikon edit dan delete dari react-feather
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { mkConfig, generateCsv, download } from 'export-to-csv'; // atau gunakan library lain di sini
 
@@ -45,6 +46,40 @@ const columns = [
     header: 'Stok',
     size: 80,
   }),
+  // Tambahkan kolom aksi (action column) dengan ikon edit dan delete
+  {
+    id: 'aksi',
+    accessor: 'actions',
+    header: 'Aksi',
+    size: 100,
+    Cell: () => (
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+        <Button
+          variant="outlined"
+          // onClick={() => handleEdit(rowData.bukuId)}
+          startIcon={<Edit2 size={16} />}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="outlined"
+          // onClick={() => handleDelete(rowData.bukuId)}
+          startIcon={<Trash2 size={16} />}
+        >
+          Hapus
+        </Button>
+      </Box>
+    ),
+
+
+
+    // Cell: ({ row }) => (
+    //   <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+    //     <Edit2 onClick={() => handleEdit(row.original)} />
+    //     <Trash2 onClick={() => handleDelete(row.original)} />
+    //   </div>
+    // ),
+  },
 ];
 
 const csvConfig = mkConfig({
@@ -89,6 +124,16 @@ const TableBuku = () => {
     download(csvConfig)(csv);
   };
 
+  const handleEdit = (bukuId: number) => {
+    // Tambahkan logika untuk meng-handle edit disini
+    console.log(`Edit buku dengan ID: ${bukuId}`);
+  };
+
+  const handleDelete = (bukuId: number) => {
+    // Tambahkan logika untuk meng-handle delete disini
+    console.log(`Hapus buku dengan ID: ${bukuId}`);
+  };
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -129,7 +174,7 @@ const TableBuku = () => {
             !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
           }
           onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
+          startIcon={<FileDownloadIcon />
         >
           Export Baris Terpilih
         </Button>
